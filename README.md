@@ -66,4 +66,5 @@ Smart Brain is a full-stack web application that uses the Clarifai API to detect
 │
 └── Server/                       # Node.js Backend
     ├── server.js                 # Main server file
-    └── package.json              # Backend dependencies`
+    └── package.json              # Backend dependencies
+    `

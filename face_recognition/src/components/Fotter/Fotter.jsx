@@ -30,7 +30,7 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="footer-social">
           <a
-            href="https://facebook.com"
+            href="https://github.com/itamarshapira/smartBrain"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -38,7 +38,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/itamar-shapira-921a72279/"
             target="_blank"
             rel="noopener noreferrer"
           >
