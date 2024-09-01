@@ -1,4 +1,4 @@
-Smart Brain 🧠
+# Smart Brain 🧠
 Smart Brain is a full-stack web application that uses the Clarifai API to detect faces and predict ages in user-submitted images. This project integrates a React frontend with a Node.js backend and MongoDB for data storage.
 
 Table of Contents
