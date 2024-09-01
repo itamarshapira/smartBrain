@@ -44,4 +44,26 @@ Smart Brain is a full-stack web application that uses the Clarifai API to detect
 
 ## Project Structure
 
-`smartBrain/ │ ├── face_recognition/ # React Frontend │ ├── src/ │ │ ├── components/ # Reusable components │ │ │ ├── AgePredictions/ # Age prediction component │ │ │ │ ├── AgePredictions.js │ │ │ │ └── AgePredictions.css │ │ │ ├── FaceRecognition/ # Face detection component │ │ │ │ ├── FaceRecognition.js │ │ │ │ └── FaceRecognition.css │ │ │ ├── Footer/ # Footer component │ │ │ │ ├── Footer.js │ │ │ │ └── Footer.css │ │ │ ├── ImageLinkForm/ # Image submission form │ │ │ │ ├── ImageLinkForm.js │ │ │ │ └── ImageLinkForm.css │ │ │ ├── Logo/ # Logo component │ │ │ │ ├── Logo.js │ │ │ │ └── Logo.css │ │ │ ├── Navigation/ # Navigation bar │ │ │ │ ├── Navigation.js │ │ │ │ └── Navigation.css │ │ │ ├── Rank/ # User rank display │ │ │ │ ├── Rank.js │ │ │ │ └── Rank.css │ │ │ ├── Register/ # User registration form │ │ │ │ ├── Register.js │ │ │ │ └── Register.css │ │ │ ├── SignIn/ # User sign-in form │ │ │ │ ├── SignIn.js │ │ │ │ └── SignIn.css │ │ ├── App.js # Main React component │ │ └── App.css # Global styles │ ├── public/ │ │ └── index.html │ └── package.json │ └── server/ # Node.js Backend ├── server.js # Main server file └── package.json # Backend dependencies`
+`smartBrain/
+│
+├── face_recognition/             # React Frontend
+│   ├── src/
+│   │   ├── components/           # Reusable components
+│   │   │   ├── AgePredictions/   # Age prediction component
+│   │   │   ├── FaceRecognition/  # Face detection component
+│   │   │   ├── Footer/           # Footer component
+│   │   │   ├── ImageLinkForm/    # Image submission form
+│   │   │   ├── Logo/             # Logo component
+│   │   │   ├── Navigation/       # Navigation bar
+│   │   │   ├── Rank/             # User rank display
+│   │   │   ├── Register/         # User registration form
+│   │   │   └── SignIn/           # User sign-in form
+│   │   ├── App.js                # Main React component
+│   │   └── App.css               # Global styles
+│   ├── public/
+│   │   └── index.html
+│   └── package.json
+│
+└── Server/                       # Node.js Backend
+    ├── server.js                 # Main server file
+    └── package.json              # Backend dependencies`
