@@ -74,4 +74,4 @@ Project Structure: smartBrain/
 └── Server/ # Backend directory (Node.js)
 ├── server.js
 └── package.json
-new/
+new/1
