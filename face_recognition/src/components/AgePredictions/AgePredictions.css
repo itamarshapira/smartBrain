@@ -1,0 +1,23 @@
+.centerAge
+{
+    display: flex;
+    
+    justify-content: center;
+    
+    
+    margin-top: 20px; /* Reduce margin-top to make spacing more consistent */
+  
+    
+}
+
+.age-predictions {
+    
+    margin-top: 370px; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  

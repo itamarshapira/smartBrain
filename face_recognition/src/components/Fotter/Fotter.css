@@ -1,0 +1,76 @@
+/* src/components/Footer.css */
+
+.blackGlass{/* From https://css.glass */
+/* From https://css.glass */
+background: rgba(0, 0, 0, 0.17);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(6.6px);
+-webkit-backdrop-filter: blur(6.6px);
+}
+.interactive-footer {
+    margin-top: 10%;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+   
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .footer-logo h2 {
+    color: #fff;
+    font-size: 24px;
+    margin: 0;
+    font-family: 'Alien League Gradient', sans-serif;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #f39c12;
+  }
+  
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .footer-social a {
+    color: #fff;
+    font-size: 20px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .footer-social a:hover {
+    transform: scale(1.2);
+    color: #f39c12;
+  }
+  
+  .footer-copy {
+    font-size: 14px;
+    color: #bbb;
+  }
+  
+  @media (max-width: 600px) {
+    .footer-links, .footer-social {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
