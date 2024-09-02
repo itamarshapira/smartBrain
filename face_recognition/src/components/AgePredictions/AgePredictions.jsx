@@ -44,7 +44,7 @@ function AgePredictions({ agePredictions }) {
 
   return (
     <div
-      className="age-predictions centerAge"
+      className="age-predictions centerAge "
       style={{ width: "300px", height: "300px" }}
     >
       <p>
