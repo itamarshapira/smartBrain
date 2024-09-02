@@ -11,18 +11,10 @@ app.use(express.json()); // Middleware to parse JSON body
 
 // Manual CORS headers setup
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow your React app
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Allow the methods you need
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend's origin
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
-});
-
-// Handle preflight requests
-app.options('*', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.sendStatus(204); // No content, preflight successful
 });
 
 const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
