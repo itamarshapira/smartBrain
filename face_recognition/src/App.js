@@ -164,6 +164,7 @@ const displayFaceBox = (box) => {
               'Content-Type': 'application/json', // Indicate that we're sending JSON data
             },
             body: JSON.stringify( { email: user.email } ), // Convert the email to JSON format
+            mode: "cors" // Ensure that CORS is handled
           })
             .then((response) => response.json()) // Parse the response JSON
             .then((data) => {

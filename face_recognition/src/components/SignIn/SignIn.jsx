@@ -30,6 +30,7 @@ function SignIn({ onRouteChange, user, onUserUpdate }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
+          mode: "cors", // Ensure that CORS is handled
         }
       );
 
