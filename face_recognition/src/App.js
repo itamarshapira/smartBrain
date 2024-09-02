@@ -158,7 +158,7 @@ const displayFaceBox = (box) => {
         console.log(result.outputs[0].data.regions); // Output result for debugging
         
         if (result) { //* fetch to 'PUT' to update the number of detection in the server
-          fetch('/detectionCounter', {
+          fetch('/https://smartbrain-backend-6y14.onrender.com/detectionCounter', {
             method: 'PUT', // Use the PUT method as defined in your endpoint
             headers: {
               'Content-Type': 'application/json', // Indicate that we're sending JSON data

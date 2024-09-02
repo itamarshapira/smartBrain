@@ -4,12 +4,26 @@
 const express = require('express');
 const mongojs = require('mongojs');
 const bcrypt = require('bcrypt-nodejs');
-
-const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
-const megicBrainColl = db.collection('megic-brain'); 
+const cors = require('cors');
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON body
+
+// Use CORS middleware with options
+const corsOptions = {
+  origin: 'http://localhost:3000', // Allow requests from your React app on localhost:3000
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  credentials: true, // Allow credentials to be sent along with the request (cookies, etc.)
+  optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions)); // Apply CORS middleware
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
+const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
+const megicBrainColl = db.collection('megic-brain'); 
 
 app.get('/', (req, res) => {
   res.send('Hello from the server!');

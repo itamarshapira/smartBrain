@@ -24,11 +24,14 @@ function SignIn({ onRouteChange, user, onUserUpdate }) {
     }
 
     try {
-      const response = await fetch("signIn", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://smartbrain-backend-6y14.onrender.com/signIn",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {

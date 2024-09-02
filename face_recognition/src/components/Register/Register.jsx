@@ -27,11 +27,14 @@ function Register({ onRouteChange, user, onUserUpdate }) {
     event.preventDefault(); // Prevent the default form submission
 
     try {
-      const response = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const response = await fetch(
+        "https://smartbrain-backend-6y14.onrender.com/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
