@@ -9,18 +9,21 @@ const cors = require('cors');
 const app = express();
 app.use(express.json()); // Middleware to parse JSON body
 
-// Use CORS middleware with options
-const corsOptions = {
-  origin: 'http://localhost:3000', // Allow requests from your React app on localhost:3000
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  credentials: true, // Allow credentials to be sent along with the request (cookies, etc.)
-  optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions)); // Apply CORS middleware
+// Manual CORS headers setup
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow your React app
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Allow the methods you need
+  next();
+});
 
 // Handle preflight requests
-app.options('*', cors(corsOptions));
+app.options('*', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.sendStatus(204); // No content, preflight successful
+});
 
 const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
 const megicBrainColl = db.collection('megic-brain'); 
