@@ -20,7 +20,7 @@ app.use(express.json()); // Middleware to parse JSON body
 // OR **Use CORS Middleware without any options to allow all origins**
 app.use(cors()); // Uncomment this line to allow all origins (for testing only)
 
-const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
+const db = mongojs('mongodb+srv://Student:webdev2024student@cluster0.uqyflra.mongodb.net/webdev2024'); // Specify the collection name
 const megicBrainColl = db.collection('megic-brain'); 
 
 app.get('/', (req, res) => {
