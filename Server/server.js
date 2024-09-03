@@ -10,15 +10,15 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON body
 
 
-// **Use CORS Middleware with specific origin**
-app.use(cors({
-  origin: 'http://localhost:3000', // Allow only this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
+// // **Use CORS Middleware with specific origin**
+// app.use(cors({
+//   origin: 'http://localhost:3000', // Allow only this origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+//   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+// }));
 
 // OR **Use CORS Middleware without any options to allow all origins**
-// app.use(cors()); // Uncomment this line to allow all origins (for testing only)
+app.use(cors()); // Uncomment this line to allow all origins (for testing only)
 
 const db = mongojs('mongodb://localhost:27017/'); // Specify the collection name
 const megicBrainColl = db.collection('megic-brain'); 
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.send('Hello from the server!');
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', (req, res,next) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
