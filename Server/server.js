@@ -10,15 +10,15 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON body
 
 
-// // **Use CORS Middleware with specific origin**
-// app.use(cors({
-//   origin: 'http://localhost:3000', // Allow only this origin
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
-//   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-// }));
+// Use CORS Middleware with the specific origin of your frontend
+app.use(cors({
+  origin: 'https://smartbrain-frontend1.onrender.com', // Allow only your frontend's origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
 
 // OR **Use CORS Middleware without any options to allow all origins**
-app.use(cors()); // Uncomment this line to allow all origins (for testing only)
+// app.use(cors()); // Uncomment this line to allow all origins (for testing only)
 
 const db = mongojs('mongodb+srv://Student:webdev2024student@cluster0.uqyflra.mongodb.net/webdev2024'); // Specify the collection name
 const megicBrainColl = db.collection('megic-brain'); 
