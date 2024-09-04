@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import "./Register.css";
-function Register({ onRouteChange, user, onUserUpdate }) {
+import Loading from "../Loading/Loading";
+function Register({
+  onRouteChange,
+  user,
+  onUserUpdate,
+  setIsLoading,
+  isLoading,
+}) {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
@@ -25,6 +32,7 @@ function Register({ onRouteChange, user, onUserUpdate }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
+    setIsLoading(true); // Show loading spinner
 
     try {
       const response = await fetch(
@@ -48,6 +56,8 @@ function Register({ onRouteChange, user, onUserUpdate }) {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); // Hide loading spinner once the request is complete
     }
   };
 
@@ -57,6 +67,8 @@ function Register({ onRouteChange, user, onUserUpdate }) {
         <form className="measure" onSubmit={handleSubmit}>
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+              {isLoading && <Loading />}
+              {/* Display loading spinner when isLoading is true */}
               <legend className="f1 fw6 ph0 mh0">Register</legend>
               <div className="mv3">
                 <label className="db fw6 lh-copy f6">Name</label>

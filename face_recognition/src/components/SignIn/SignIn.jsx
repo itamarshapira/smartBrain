@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import "./SignIn.css";
 import SignInLogo from "./SignInLogo";
+import Loading from "../Loading/Loading";
 //sigin
 
-function SignIn({ onRouteChange, user, onUserUpdate }) {
+function SignIn({
+  onRouteChange,
+  user,
+  onUserUpdate,
+  setIsLoading,
+  isLoading,
+}) {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
 
@@ -18,8 +25,11 @@ function SignIn({ onRouteChange, user, onUserUpdate }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setIsLoading(true); // Show loading spinner
+
     if (!email || !password) {
       alert("Please fill out both fields.");
+      setIsLoading(false); // Hide loading spinner if validation fails
       return;
     }
 
@@ -48,11 +58,15 @@ function SignIn({ onRouteChange, user, onUserUpdate }) {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); // Hide loading spinner once the request is complete
     }
   };
 
   return (
     <div className="logo">
+      {isLoading && <Loading />}
+      {/* Display loading spinner when isLoading is true */}
       <article className="glass br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
           <form className="measure" onSubmit={handleSubmit}>

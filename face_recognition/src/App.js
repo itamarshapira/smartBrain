@@ -11,6 +11,7 @@ import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 import AgePredictions from './components/AgePredictions/AgePredictions';
 import Fotter from './components/Fotter/Fotter'
+import Loading from './components/Loading/Loading';
 
 function App () {
  
@@ -46,6 +47,9 @@ function App () {
     setUser((prevUser) => ({ ...prevUser, ...newUser }));
   }; //* end here
 
+//* New state for loading
+  const [isLoading, setIsLoading] = useState(false); 
+  
   // * just to chake : const onInputChange = (event) => {console.log(event.target.value)}
   // * just to chake : const onButtonSubmit = () => {console.log('click')}
 
@@ -247,6 +251,8 @@ const displayFaceBox = (box) => {
 
       {/* Navigation bar that shows 'Sign In' or 'Sign Out' based on the isSignedIn state */}
       <Navigtion isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+
+      
   
       {/* Conditional rendering: 
           If the user is signed in (isSignedIn is true), show the homepage components. 
@@ -272,10 +278,11 @@ const displayFaceBox = (box) => {
       ) : (
         isSignedIn==="signin"
         /* SignIn component that shows the sign-in form if the user is not signed in */
-       ? <SignIn onRouteChange={onRouteChange} user={user} onUserUpdate={handleUserUpdate} />
-       :<Register onRouteChange={onRouteChange}  user={user} onUserUpdate={handleUserUpdate} />
+       ? <SignIn onRouteChange={onRouteChange} user={user} onUserUpdate={handleUserUpdate} setIsLoading={setIsLoading} isLoading={isLoading} />
+       :<Register onRouteChange={onRouteChange}  user={user} onUserUpdate={handleUserUpdate} setIsLoading={setIsLoading} isLoading={isLoading} />
       )}
       <Fotter />
+      
     </div>
   );
 }
