@@ -13,6 +13,7 @@ function SignIn({
 }) {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
+  const [loadingMessage, setLoadingMessage] = useState(""); // New state for additional loading message
 
   const onEmailChange = (event) => {
     setEmail(event.target.value);
@@ -26,6 +27,12 @@ function SignIn({
     event.preventDefault();
 
     setIsLoading(true); // Show loading spinner
+
+    // setLoadingMessage(""); // Reset the message when loading starts
+    // // Trigger message after 5 seconds
+    // setTimeout(() => {
+    //   setLoadingMessage("Yep, it's still loading...");
+    // }, 5000);
 
     if (!email || !password) {
       alert("Please fill out both fields.");
@@ -60,17 +67,21 @@ function SignIn({
       console.error("Error:", error);
     } finally {
       setIsLoading(false); // Hide loading spinner once the request is complete
+      // setLoadingMessage(""); // Reset the message when loading finishes
     }
   };
 
   return (
     <div className="logo">
-      {isLoading && <Loading />}
-      {/* Display loading spinner when isLoading is true */}
       <article className="glass br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
           <form className="measure" onSubmit={handleSubmit}>
             <div className="measure">
+              {/* Display loading spinner when isLoading is true */}
+              {isLoading && <Loading />}
+
+              {/* {loadingMessage && <p>{loadingMessage}</p>}
+              Display the additional loading message */}
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                 <SignInLogo />
                 <legend className="f1 fw6 ph0 mh0">Sign In</legend>

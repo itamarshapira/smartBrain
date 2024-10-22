@@ -1,3 +1,5 @@
+// github : git add -A    .  git commit -m "my comit..." git push
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // In this section, we set the user authentication, user and app ID, model details, and the URL
 // of the image we want as an input. Change these strings to run your own example.

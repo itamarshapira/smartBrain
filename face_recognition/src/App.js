@@ -73,11 +73,11 @@ function App () {
   const returnClarifaiRequestOption = (imageUrl, modelId = 'face-detection') =>{ //* my change func that make an order and gets imageUrl
     console.log(imageUrl)
     // Your PAT (Personal Access Token) can be found in the Account's Security section
-    const PAT = '902245b41f1044c28891cf32ef45fdb2'; //* my change
+    const PAT = '8bdb930565584e669e64c60d54da0689'; //* my change  902245b41f1044c28891cf32ef45fdb2
     // Specify the correct user_id/app_id pairings
     // Since you're making inferences outside your app's scope
-    const USER_ID = 'k456q92mn98y';       //* my change
-    const APP_ID = 'imgRec'; //* my change
+    const USER_ID = 'sq2f7tvhpva3';       //* my change
+    const APP_ID = 'SmartBrain'; //* my change
     // Change these to whatever model and image URL you want to use
     const MODEL_ID = 'face-detection';
     // const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';    no need to use
