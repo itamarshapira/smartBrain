@@ -73,7 +73,7 @@ function App () {
   const returnClarifaiRequestOption = (imageUrl, modelId = 'face-detection') =>{ //* my change func that make an order and gets imageUrl
     console.log(imageUrl)
     // Your PAT (Personal Access Token) can be found in the Account's Security section
-    const PAT = '902245b41f1044c28891cf32ef45fdb2'; //* my change be970177d7ef4a7d8fdfb7f58acf9c18
+    const PAT = '902245b41f1044c28891cf32ef45fdb2'; //* my change
     // Specify the correct user_id/app_id pairings
     // Since you're making inferences outside your app's scope
     const USER_ID = 'k456q92mn98y';       //* my change
@@ -153,71 +153,98 @@ const displayFaceBox = (box) => {
   // todo: and also uses the api doc of clarifi with the help of !section 290! in ZTM to read a doc like a pro !
   //todo: also i added fetch to Clarifai age prediction
   const onButtonSubmit = () => {
-    setImageUrl(input); // Set the image URL for display
-    
-    // Call the backend instead of Clarifai directly
-    fetch('https://smartbrain-backend-6y14.onrender.com/clarifai', { // Replace with your backend's URL
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        imageUrl: input, // Send the image URL to the backend
-        modelId: 'face-detection' // Specify the model ID
-      }),
-    })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result.outputs[0].data.regions); // Output result for debugging
+    setImageUrl(input); //* Set the imageUrl to the input value when the button is pressed
   
-      if (result) {
-        // Update detection counter
-        fetch('https://smartbrain-backend-6y14.onrender.com/detectionCounter', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: user.email }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            handleUserUpdate({
-              detectionCounter: data.userCount,
-              name: data.userName,
-            });
+    //* Fetching face detection data
+    fetch("https://api.clarifai.com/v2/models/face-detection/outputs", returnClarifaiRequestOption(input))
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result.outputs[0].data.regions); // Output result for debugging
+        
+        if (result) { //* fetch to 'PUT' to update the number of detection in the server
+          fetch('https://smartbrain-backend-6y14.onrender.com/detectionCounter', {
+            method: 'PUT', // Use the PUT method as defined in your endpoint
+            headers: {
+              'Content-Type': 'application/json', // Indicate that we're sending JSON data
+            },
+            body: JSON.stringify( { email: user.email } ), // Convert the email to JSON format
+            mode: "cors" // Ensure that CORS is handled
+          })
+            .then((response) => response.json()) // Parse the response JSON
+            .then((data) => {
+              if (data.error) {
+                // Handle errors from the server
+                console.error('Error updating detection counter:', data.error);
+                alert(data.error);
+              } else {
+                // Successful increment
+                handleUserUpdate({
+                  detectionCounter: data.userCount,
+                  name: data.userName,
+                });
+
+                console.log('Detection counter updated:', data);
+                alert(`Detection counter incremented for ${data.userName}. New count: ${data.userCount}`);
+              }
+            })
+            .catch((error) => {
+              // Handle network or other errors
+              console.error('Error:', error);
+              alert('An error occurred while updating the detection counter. Please try again.');
+            }); //* update faceBOx with the face detection clarifai API result
+          const faceBox = calculateFaceLocation(result);
+          displayFaceBox(faceBox);
+        }
+  
+        //(just for me): This is the data from face detection to DEBUG:
+        const regions = result.outputs[0].data.regions;
+        if (regions && regions.length > 0) {  // Check if regions exist and have at least one element
+          regions.forEach((region) => {
+            // Accessing and rounding the bounding box values
+            const boundingBox = region.region_info.bounding_box;
+            const topRow = boundingBox.top_row.toFixed(3);
+            const leftCol = boundingBox.left_col.toFixed(3);
+            const bottomRow = boundingBox.bottom_row.toFixed(3);
+            const rightCol = boundingBox.right_col.toFixed(3);
+  
+            if (region.data.concepts) {  // Check if concepts exist
+              region.data.concepts.forEach((concept) => {
+                // Accessing and rounding the concept value *BINARY_POSITIVE*
+                const name = concept.name;
+                const value = concept.value.toFixed(4);
+  
+                console.log(
+                  `${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`
+                );
+              });
+            }
           });
-  
-        // Calculate and display the face box
-        const faceBox = calculateFaceLocation(result);
-        displayFaceBox(faceBox);
-      }
-  
-      // Fetch age detection data using the same backend route but with a different model
-      fetch('https://smartbrain-backend-6y14.onrender.com/clarifai', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          imageUrl: input,
-          modelId: 'age-demographics-recognition' // Use the age recognition model
-        }),
-      })
-      .then(response => response.json())
-      .then(result => {
-        console.log("Full Age Detection Result:", result);
-  
-        const ageConcepts = result.outputs[0].data.concepts;
-        const top3Concepts = ageConcepts.slice(0, 3); // Get the top 3 predictions
-        setIsDetectionMade(true); // Indicate that detection is made
-        setAgePredictions(top3Concepts); // Update age predictions
-      });
+        } else {
+          console.log("No face regions detected."); // Log if no regions were detected
+        }
+         
+        
+        // *Fetching age detection data using the same image URL:
+      return fetch("https://api.clarifai.com/v2/models/age-demographics-recognition/outputs", returnClarifaiRequestOption(input, 'age-demographics-recognition'));
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    .then(response => response.json())
+    .then(result => {
+      console.log("Full Age Detection Result:", result); // Log the entire response for debugging
+
+  const ageConcepts = result.outputs[0].data.concepts;
+  // Get the top 3 age predictions
+  const top3Concepts = ageConcepts.slice(0, 3);
+  console.log("Top 3 Age Predictions:", top3Concepts);
+  setIsDetectionMade(true); // Update state to indicate detection is made
+
+  // Set the top 3 age predictions in the state for rendering
+  setAgePredictions(top3Concepts);
+    })
+    .catch((error) => console.log("Error:", error));
+
+  console.log('click');
   };
-  
+
   return (
     <div className="App">
       <ParticlesBg color="#DCDCDC" num={55} type="cobweb" bg={true} />

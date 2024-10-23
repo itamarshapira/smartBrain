@@ -132,58 +132,7 @@ app.post('/signIn', (req, res) => {
       );
     });
   });
-
-  const fetch = require('node-fetch'); // Import node-fetch for making HTTP requests
-
-// Route to handle Clarifai API requests
-app.post('/clarifai', async (req, res) => {
-  const { imageUrl, modelId } = req.body; // Get image URL and model ID from the request body
-
-  const PAT = '902245b41f1044c28891cf32ef45fdb2'; // Clarifai PAT
-  const USER_ID = 'k456q92mn98y';
-  const APP_ID = 'imgRec';
-
-  // Prepare the request body for Clarifai API
-  const raw = JSON.stringify({
-    "user_app_id": {
-      "user_id": USER_ID,
-      "app_id": APP_ID
-    },
-    "inputs": [
-      {
-        "data": {
-          "image": {
-            "url": imageUrl // Use the image URL sent from the frontend
-          }
-        }
-      }
-    ]
-  });
-
-  // Set up request options
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Key ' + PAT,
-      'Content-Type': 'application/json'
-    },
-    body: raw
-  };
-
-  // Make the request to the Clarifai API
-  try {
-    const clarifaiResponse = await fetch(`https://api.clarifai.com/v2/models/${modelId}/outputs`, requestOptions);
-    const data = await clarifaiResponse.json();
-
-    // Send the Clarifai response back to the frontend
-    res.status(200).json(data);
-  } catch (error) {
-    console.error('Error calling Clarifai API:', error);
-    res.status(500).json({ error: 'Failed to process image with Clarifai API' });
-  }
-});
-
+  
   
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
