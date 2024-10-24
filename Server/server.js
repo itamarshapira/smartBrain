@@ -12,7 +12,7 @@ app.use(express.json()); // Middleware to parse JSON body
 
 // Use CORS Middleware with the specific origin of your frontend
 app.use(cors({
-  origin: 'https://smartbrain-frontend1.onrender.com', // Allow only your frontend's origin
+  origin: ['https://smartbrain-frontend1.onrender.com','http://localhost:3000'], // Allow only your frontend's origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 }));
@@ -133,6 +133,58 @@ app.post('/signIn', (req, res) => {
     });
   });
   
+ //* NEW API FETCH : 
+
+ // Add a new route to handle Clarifai API requests
+ app.post('/clarifai', async (req, res) => {
+   const { imageUrl, modelId } = req.body; // The frontend sends the image URL and model ID
+ 
+   const PAT = '902245b41f1044c28891cf32ef45fdb2'; // Your Clarifai Personal Access Token
+   const USER_ID = 'k456q92mn98y';
+   const APP_ID = 'imgRec';
+ 
+   const raw = JSON.stringify({
+     "user_app_id": {
+       "user_id": USER_ID,
+       "app_id": APP_ID
+     },
+     "inputs": [
+       {
+         "data": {
+           "image": {
+             "url": imageUrl // The image URL from the frontend
+           }
+         }
+       }
+     ]
+   });
+ 
+   // Set the options for the Clarifai API request
+   const requestOptions = {
+     method: 'POST',
+     headers: {
+       'Accept': 'application/json',
+       'Authorization': 'Key ' + PAT,
+       'Content-Type': 'application/json',
+     },
+     body: raw
+   };
+ 
+   try {
+     // Make the request to the Clarifai API
+     const clarifaiResponse = await fetch(`https://api.clarifai.com/v2/models/${modelId}/outputs`, requestOptions);
+     const data = await clarifaiResponse.json();
+ 
+     // Send the response back to the frontend
+     res.status(200).json(data);
+   } catch (error) {
+     console.error('Error calling Clarifai API:', error);
+     res.status(500).json({ error: 'Failed to process image with Clarifai API' });
+   }
+ });
+ 
+ //* NEW API FETCH END 
+
   
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

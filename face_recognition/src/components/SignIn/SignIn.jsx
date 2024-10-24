@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SignIn.css";
+import backendUrl from "../../config";
+
 import SignInLogo from "./SignInLogo";
 import Loading from "../Loading/Loading";
 //sigin
@@ -41,15 +43,12 @@ function SignIn({
     }
 
     try {
-      const response = await fetch(
-        "https://smartbrain-backend-6y14.onrender.com/signIn",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-          mode: "cors", // Ensure that CORS is handled
-        }
-      );
+      const response = await fetch(`${backendUrl}/signIn`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        mode: "cors", // Ensure that CORS is handled
+      });
 
       const data = await response.json();
       if (response.ok) {

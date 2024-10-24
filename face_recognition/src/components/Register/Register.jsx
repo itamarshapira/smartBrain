@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Register.css";
 import Loading from "../Loading/Loading";
+import backendUrl from "../../config";
+
 function Register({
   onRouteChange,
   user,
@@ -35,15 +37,12 @@ function Register({
     setIsLoading(true); // Show loading spinner
 
     try {
-      const response = await fetch(
-        "https://smartbrain-backend-6y14.onrender.com/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-          mode: "cors", // Ensure that CORS is handled
-        }
-      );
+      const response = await fetch(`${backendUrl}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+        mode: "cors", // Ensure that CORS is handled
+      });
 
       const data = await response.json();
       if (response.ok) {

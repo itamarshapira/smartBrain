@@ -44,13 +44,11 @@ function AgePredictions({ agePredictions }) {
 
   return (
     <div
-      className="age-predictions centerAge "
+      className="age-predictions centerAge"
       style={{ width: "300px", height: "300px" }}
     >
-      <p>
-        <h3>Top 3 Age Predictions:</h3>
-        <h4>proximaly Age: {weightedAverage.toFixed(2)}</h4>
-      </p>
+      <h3>Top 3 Age Predictions:</h3>
+      <p>Proximal Age: {weightedAverage.toFixed(2)}</p>
       <Pie data={data} />
     </div>
   );
