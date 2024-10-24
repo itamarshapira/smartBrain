@@ -12,17 +12,11 @@ import Register from './components/Register/Register';
 import AgePredictions from './components/AgePredictions/AgePredictions';
 import Fotter from './components/Fotter/Fotter'
 import Loading from './components/Loading/Loading';
+import backendUrl from './config'; // import env from config (new commit)
+
 
 function App () {
  
-// We check if the environment is 'development' or 'production'.
-// 'process.env.NODE_ENV' is set automatically by React depending on whether 
-// the app is running locally or in a live production environment.
-const backendUrl = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:3001'  // Local backend for development
-  : 'https://smartbrain-backend-6y14.onrender.com';  // Deployed backend for production
-
-
   // * state to switch sign in , registar or home :
   const [isSignedIn, setIsSignedIn] = useState("signin");
 
